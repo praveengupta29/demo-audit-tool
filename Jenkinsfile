@@ -6,6 +6,7 @@ pipeline{
            
             steps {
                 dir("microservices/questionnaire/") {
+                    sh 'export PATH="$PATH:/usr/local/bin/"'
                     sh 'npm install'
                 }
             }
