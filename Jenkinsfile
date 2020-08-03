@@ -1,14 +1,17 @@
 pipeline{
-    agent any
+   agent {
+        docker {
+            image 'node:current-slim'
+            args '-v /tmp:/tmp'
+        }
+   }
     
     stages{
         stage('Installing NPM dependencies'){
            
             steps {
                 dir("microservices/questionnaire/") {
-                    sh 'ls /usr/local/bin/'
-                    sh '/usr/local/bin/node -v'
-                    sh '/usr/local/bin/npm install'
+                    sh 'npm install'
                 }
             }
         }
@@ -16,7 +19,7 @@ pipeline{
         
             steps {
                 dir("microservices/questionnaire/") {
-                    sh '/usr/local/bin/npm run test'
+                    sh 'npm run test'
                 }
             }
         }
