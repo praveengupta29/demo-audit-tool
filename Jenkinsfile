@@ -1,12 +1,12 @@
 pipeline{
-    agent any
+    agent master
     
     stages{
         stage('Installing NPM dependencies'){
            
             steps {
                 dir("microservices/questionnaire/") {
-                    sh 'brew install node'
+                    sh 'ls /usr/local/bin/'
                     sh 'node -v'
                     sh 'npm install'
                 }
