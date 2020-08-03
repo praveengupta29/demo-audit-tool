@@ -1,17 +1,21 @@
 pipeline{
-     agent any
+    agent any
     
     stages{
         stage('Installing NPM dependencies'){
            
             steps {
-                sh '/usr/local/bin/npm install'
+                dir("microservices/questionnaire/") {
+                    sh '/usr/local/bin/npm install'
+                }
             }
         }
         stage('Run Unit Test'){
         
             steps {
-                sh '/usr/local/bin/npm run test'
+                dir("microservices/questionnaire/") {
+                    sh '/usr/local/bin/npm run test'
+                }
             }
         }
     }
