@@ -1,4 +1,6 @@
-pipeline {
+pipeline{
+    agent any
+    
     stages{
         stage('Installing NPM dependencies'){
            
