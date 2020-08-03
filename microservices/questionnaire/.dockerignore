@@ -1,0 +1,6 @@
+Dockerfile
+README.md
+npm-debug.log
+Jenkinsfile
+sonar-project.js
+test-report.xml
