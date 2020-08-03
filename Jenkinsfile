@@ -7,8 +7,8 @@ pipeline{
             steps {
                 dir("microservices/questionnaire/") {
                     sh 'ls /usr/local/bin/'
-                    sh 'node -v'
-                    sh 'npm install'
+                    sh '/usr/local/bin/node -v'
+                    sh '/usr/local/bin/npm install'
                 }
             }
         }
@@ -16,7 +16,7 @@ pipeline{
         
             steps {
                 dir("microservices/questionnaire/") {
-                    sh 'npm run test'
+                    sh '/usr/local/bin/npm run test'
                 }
             }
         }
