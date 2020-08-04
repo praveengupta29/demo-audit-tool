@@ -1,10 +1,8 @@
 pipeline{
-   agent {
-        docker {
-            image 'node:current-slim'
-            args '-v /tmp:/tmp'
-        }
-   }
+    agent any
+   
+    tools {nodejs "node"}
+
     
     stages{
         stage('Installing NPM dependencies'){
