@@ -1,26 +1,32 @@
-pipeline{
-    agent {
-        docker {
-            image 'node:current-slim'
-            args '-v /tmp:/tmp'
+podTemplate(
+    label: 'cd-jenkins-jenkins-slave', 
+    containers: [ 
+        containerTemplate(
+            name: 'docker', 
+            image: 'docker:18.02',
+            ttyEnabled: true,
+            command: 'cat'
+        ),
+    ],
+    volumes: [
+        hostPathVolume(
+            hostPath: '/var/run/docker.sock',
+            mountPath: '/var/run/docker.sock'
+        )
+    ]
+) {
+    node('cd-jenkins-jenkins-slave') {
+        def commitId
+        stage ('Checkout') {
+            checkout scm
+            commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
         }
-    }   
+        def repository
+        def projectId = 'empirical-mote-282603'
     
-    stages{
-        stage('Installing NPM dependencies'){
-           
-            steps {
-                dir("microservices/questionnaire/") {
-                    sh 'npm install'
-                }
-            }
-        }
-        stage('Run Unit Test'){
-        
-            steps {
-                dir("microservices/questionnaire/") {
-                    sh 'npm run test'
-                }
+        stage ('Build') {
+            container ('docker') {
+                sh "echo hello"
             }
         }
     }
