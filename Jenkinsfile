@@ -22,7 +22,7 @@ podTemplate(
             commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
         }
         def repository
-        def projectId = 'empirical-mote-282603'
+        def projectId = 'basic-k8s'
     
         stage ('Build') {
             container ('docker') {
