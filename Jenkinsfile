@@ -21,6 +21,13 @@ podTemplate(
             checkout scm
             commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
         }
+        stage ('Npm dependencies') {
+            steps {
+                dir("microservices/questionnaire/") {
+                    sh 'npm install'
+                }	            
+            }
+        }
         def repository
         def projectId = 'basic-k8s'
     
