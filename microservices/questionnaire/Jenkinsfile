@@ -26,8 +26,13 @@ podTemplate(
     
         stage ('Build') {
             container ('docker') {
-                sh 'npm install'
-                sh "echo hello"
+                repository = "gcr.io/${projectId}/questionnaire"
+ 
+                docker.withRegistry('https://gcr.io', "gcr-${projectId}") {
+                     def dockerImage = docker.build("${projectId}/questionnaire:${commitId}", ".")
+                    
+                    dockerImage.push('latest')
+                }
             }
         }
     }
