@@ -21,7 +21,6 @@ podTemplate(
             checkout scm
             commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
         }
-        def repository
         def projectId = 'basic-k8s'
     
         stage ('Build') {
@@ -29,11 +28,11 @@ podTemplate(
                 repository = "gcr.io/${projectId}/questionnaire"
  
                 docker.withRegistry('https://gcr.io', "gcr-${projectId}") {
-                     def dockerImage = docker.build("${projectId}/questionnaire:${commitId}", ".")
+                     def dockerImage = docker.build("${projectId}/questionnaire")
                     
                     dockerImage.push('latest')
                 }
             }
-        }
+        } 
     }
 }
