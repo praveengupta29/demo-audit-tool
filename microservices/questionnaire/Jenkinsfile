@@ -7,6 +7,12 @@ podTemplate(
             ttyEnabled: true,
             command: 'cat'
         ),
+        containerTemplate(
+            name: 'kubectl', 
+            image: 'gcr.io/cloud-builders/kubectl',
+            ttyEnabled: true,
+            command: 'cat'
+        ),
     ],
     volumes: [
         hostPathVolume(
@@ -27,10 +33,16 @@ podTemplate(
             container ('docker') {
                 def dockerImage = docker.build("${projectId}/questionnaire", "./microservices/questionnaire")
                 
-                docker.withRegistry('https://gcr.io', "gcr:gcr-${projectId}") {
+                docker.withRegistry('https://gcr.io', "gcr:${projectId}") {
                     
                     dockerImage.push('latest')
                 }
+            }
+        }
+        
+        stage ('Deployment') {
+            container ('kubectl') {
+                  sh("kubectl apply -f ./microservices/questionnaire/questionnaire-service.yaml")
             }
         }
     }
