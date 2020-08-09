@@ -25,7 +25,7 @@ podTemplate(
     
         stage ('Build') {
             container ('docker') {
-                def dockerImage = docker.build("${projectId}/questionnaire")
+                def dockerImage = docker.build("${projectId}/questionnaire", "./microservices/questionnaire")
                 
                 docker.withRegistry('https://gcr.io', "gcr:gcr-${projectId}") {
                     
