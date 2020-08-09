@@ -42,7 +42,10 @@ podTemplate(
         
         stage ('Deployment') {
             container ('kubectl') {
+                 docker.withRegistry('https://gcr.io', "gcr:${projectId}") {
+                    
                   sh("kubectl --namespace=defult apply -f ./microservices/questionnaire/questionnaire-service.yaml")
+                }
             }
         }
     }
