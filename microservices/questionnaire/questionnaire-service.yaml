@@ -32,4 +32,9 @@ spec:
           env:
             - name: PORT
               value: "3000"
-          imagePullPolicy: Never
+            - name: DB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: db-connection
+                  key: db-url
+          imagePullPolicy: Always
